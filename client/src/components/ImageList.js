@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useContext } from 'react'
+import { ImageContext } from '../context/ImageContext.js'
 
-function ImageList() {
-  const [images, setImages] = useState([])
 
-  useEffect(() => {
-    axios
-      .get('./images')
-    //   .then((result) => console.log({ result }))
-      .then((result) => setImages(result.data))
-      .catch((err) => console.error(err))
-  }, [])
+function ImageList({ images }) {
+  const value = useContext(ImageContext)
+  console.log(value)
 
   const imgList = images.map((image) => (
-    <img src={`http://localhost:5000/uploads/${image.key}`} style={{ maxWidth: '100%' }} />
+    <img
+      key={image.key}
+      src={`http://localhost:5000/uploads/${image.key}`}
+      style={{ maxWidth: '100%' }}
+    />
   ))
 
   return (
@@ -25,4 +23,3 @@ function ImageList() {
 }
 
 export default ImageList
-

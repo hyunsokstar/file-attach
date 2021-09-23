@@ -54,18 +54,25 @@ mongoose
     console.log("MongoDb Connected");
     app.use("/uploads", express.static("uploads"));
 
-    // app.post("/upload", upload.single("image"), async (req, res) => {
-    app.post("/images", upload.single("image"), async (req, res) => {
-      console.log("파일 업로드 요청 받음");
-      console.log(req.file);
+//    app.post("/images", upload.single("image"), async (req, res) => {
+//      console.log("파일 업로드 요청 받음");
+//      console.log(req.file);
+//
+//      await new Image({
+//        key: req.file.filename,
+//        originalFileName: req.file.originalname,
+//      }).save();
+//
+//      res.json(req.file);
+//    });
 
-      await new Image({
+    app.post('/images', upload.single('image'), async (req, res) => {
+      const image = await new Image({
         key: req.file.filename,
         originalFileName: req.file.originalname,
-      }).save();
-
-      res.json(req.file);
-    });
+      }).save()
+      res.json(image)
+    })
 
     app.get('/images', async (req, res) => {
       const images = await Image.find()
